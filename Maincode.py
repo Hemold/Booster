@@ -2,13 +2,17 @@ import RPi.GPIO as GPIO
 import time
 
 # Pin setup
-PWM1 = 0
-PWM2 = 2
-DIR1 = 12
-DIR2 = 13
-DIR3 = 10
-DIR4 = 11
-QRE1113_PIN = 17  # Example pin for the QRE1113 sensor
+PWM1 = 17 # Blå, Venstre side
+PWM2 = 27 # Lilla, Højre side
+
+# Front
+DIR1 = 10 # Venstre hjul
+DIR2 = 9 # Højre hjul
+# Bag
+DIR3 = 8 # Hvid, højre hjul
+DIR4 = 7  # Sort, venstre hjul
+
+#QRE1113_PIN = 17  # Example pin for the QRE1113 sensor
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -18,7 +22,7 @@ GPIO.setup(DIR3, GPIO.OUT)
 GPIO.setup(DIR4, GPIO.OUT)
 GPIO.setup(PWM1, GPIO.OUT)
 GPIO.setup(PWM2, GPIO.OUT)
-GPIO.setup(QRE1113_PIN, GPIO.IN)  # Setup QRE1113_PIN as an input
+#GPIO.setup(QRE1113_PIN, GPIO.IN)  # Setup QRE1113_PIN as an input
 
 # PWM setup (setting frequency to 100 Hz)
 pwm1 = GPIO.PWM(PWM1, 100)
