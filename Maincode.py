@@ -21,8 +21,8 @@ GPIO.setup(PWM2, GPIO.OUT)
 GPIO.setup(QRE1113_PIN, GPIO.IN)  # Setup QRE1113_PIN as an input
 
 # PWM setup (setting frequency to 100 Hz)
-pwm1 = GPIO.PWM(PWM1, 500)
-pwm2 = GPIO.PWM(PWM2, 500)
+pwm1 = GPIO.PWM(PWM1, 100)
+pwm2 = GPIO.PWM(PWM2, 100)
 
 pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
@@ -60,13 +60,13 @@ def stop():
 
 # Main loop example
 try:
-    forward(1000)  # Move forward at 50% speed
+    forward(100)  # Move forward at 50% speed
     time.sleep(2)
 
-    left(500)  # Turn left at 50% speed
+    left(100)  # Turn left at 50% speed
     time.sleep(2)
 
-    right(500)  # Turn right at 50% speed
+    right(100)  # Turn right at 50% speed
     time.sleep(2)
 
     # Sensor loop
