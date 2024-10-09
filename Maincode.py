@@ -41,7 +41,7 @@ def right(speed):
     GPIO.output(DIR2, GPIO.LOW)   # Set motor 2 reverse
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
-
+ 
 # Cleanup GPIO
 def stop():
     pwm1.stop()
