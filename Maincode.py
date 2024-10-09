@@ -6,6 +6,7 @@ PWM1 = 5
 DIR1 = 4
 PWM2 = 6
 DIR2 = 7
+QRE1113_PIN = 17  # Example pin for the QRE1113 sensor
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -13,6 +14,7 @@ GPIO.setup(DIR1, GPIO.OUT)
 GPIO.setup(DIR2, GPIO.OUT)
 GPIO.setup(PWM1, GPIO.OUT)
 GPIO.setup(PWM2, GPIO.OUT)
+GPIO.setup(QRE1113_PIN, GPIO.IN)  # Setup QRE1113_PIN as an input
 
 # PWM setup (setting frequency to 100 Hz)
 pwm1 = GPIO.PWM(PWM1, 100)
@@ -41,7 +43,7 @@ def right(speed):
     GPIO.output(DIR2, GPIO.LOW)   # Set motor 2 reverse
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
- 
+
 # Cleanup GPIO
 def stop():
     pwm1.stop()
@@ -59,5 +61,16 @@ try:
     right(50)  # Turn right at 50% speed
     time.sleep(2)
 
+    # Sensor loop
+    while True:
+        sensor_value = GPIO.input(QRE1113_PIN)  # Read the sensor value
+        
+        if sensor_value == GPIO.HIGH:
+            print("Reflective surface detected")  # Checks if a reflective surface is detected
+        else:
+            print("No reflective surface detected")
+            
+        time.sleep(0.1)  # Short delay
+
 finally:
-    stop()
+    stop()  # Ensure GPIO cleanup when done
