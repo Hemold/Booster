@@ -17,10 +17,10 @@ GPIO.setup(DIR4, GPIO.OUT)
 GPIO.setup(PWM1, GPIO.OUT)
 GPIO.setup(PWM2, GPIO.OUT)
 
-PWM1 = GPIO.PWM(PWM1, 1000)
-PWM1.start(0)
-PWM2 = GPIO.PWM(PWM2, 1000)
-PWM2.start(0)
+pi_PWM1 = GPIO.PWM(PWM1, 1000)
+pi_PWM1.start(0)
+pi_PWM2 = GPIO.PWM(PWM2, 1000)
+pi_PWM2.start(0)
 
 def koer():
     GPIO.output(DIR1, True)
@@ -29,8 +29,8 @@ def koer():
     GPIO.output(DIR3, True)
     GPIO.output(DIR4, True)
     
-    PWM1.ChangeDutyCycle(100)
-    PWM2.ChangeDutyCycle(100)
+    pi_PWM1.ChangeDutyCycle(100)
+    pi_PWM2.ChangeDutyCycle(100)
 
 def dven():
 		
@@ -41,8 +41,8 @@ def dven():
     GPIO.output(DIR3, True)
     GPIO.output(DIR4, True)
 
-    PWM1.ChangeDutyCycle(100)
-    PWM2.ChangeDutyCycle(0)
+    pi_PWM1.ChangeDutyCycle(100)
+    pi_PWM2.ChangeDutyCycle(0)
 
 def dhoej():
 
@@ -52,7 +52,9 @@ def dhoej():
     GPIO.output(DIR3, True)
     GPIO.output(DIR4, True)
 
-    PWM1.ChangeDutyCycle(0)
-    PWM2.ChangeDutyCycle(100)
+    pi_PWM1.ChangeDutyCycle(0)
+    pi_PWM2.ChangeDutyCycle(100)
 
 koer()
+dven()
+dhoej()
