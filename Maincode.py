@@ -64,13 +64,13 @@ def stop():
 
 # Main loop example
 try:
-    forward(100)  # Move forward at 50% speed
+    forward(50)  # Move forward at 50% speed
     time.sleep(2)
 
-    left(100)  # Turn left at 50% speed
+    left(50)  # Turn left at 50% speed
     time.sleep(2)
 
-    right(100)  # Turn right at 50% speed
+    right(50)  # Turn right at 50% speed
     time.sleep(2)
 
     # Sensor loop
