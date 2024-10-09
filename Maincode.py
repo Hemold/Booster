@@ -79,7 +79,7 @@ try:
     time.sleep(2)
     backwards(100)
     #right(75)  # Turn right at 50% speed
-    time.sleep(2)
+    time.sleep(4)
 
     # Sensor loop
 #    while True:
