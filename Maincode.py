@@ -77,7 +77,7 @@ try:
 
     #left(75)  # Turn left at 50% speed
     time.sleep(2)
-
+    backwards(100)
     #right(75)  # Turn right at 50% speed
     time.sleep(2)
 
@@ -92,5 +92,5 @@ try:
             
 #        time.sleep(0.1)  # Short delay
 
-finally:
-    stop()  # Ensure GPIO cleanup when done
+# finally:
+    # stop()  # Ensure GPIO cleanup when done
