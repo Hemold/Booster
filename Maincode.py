@@ -40,6 +40,14 @@ def forward(speed):
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
+def backwards(speed):
+    GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
+    GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward
+    GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 direction forward
+    GPIO.output(DIR4, GPIO.LOW)
+    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+
 # Function to turn left
 def left(speed):
     GPIO.output(DIR1, GPIO.LOW)   # Set motor 1 reverse
