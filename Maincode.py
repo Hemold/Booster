@@ -92,5 +92,5 @@ try:
             
 #        time.sleep(0.1)  # Short delay
 
-# finally:
-    # stop()  # Ensure GPIO cleanup when done
+finally:
+    stop()  # Ensure GPIO cleanup when done
