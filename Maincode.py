@@ -2,16 +2,20 @@ import RPi.GPIO as GPIO
 import time
 
 # Pin setup
-PWM1 = 5
-DIR1 = 4
-PWM2 = 6
-DIR2 = 7
+PWM1 = 0
+PWM2 = 2
+DIR1 = 12
+DIR2 = 13
+DIR3 = 10
+DIR4 = 11
 QRE1113_PIN = 17  # Example pin for the QRE1113 sensor
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(DIR1, GPIO.OUT)
 GPIO.setup(DIR2, GPIO.OUT)
+GPIO.setup(DIR3, GPIO.OUT)
+GPIO.setup(DIR4, GPIO.OUT)
 GPIO.setup(PWM1, GPIO.OUT)
 GPIO.setup(PWM2, GPIO.OUT)
 GPIO.setup(QRE1113_PIN, GPIO.IN)  # Setup QRE1113_PIN as an input
@@ -27,6 +31,8 @@ pwm2.start(0)
 def forward(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
     GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward
+    GPIO.output(DIR3, GPIO.HIGH)  # Set motor 1 direction forward
+    GPIO.output(DIR4, GPIO.HIGH)
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
@@ -34,6 +40,8 @@ def forward(speed):
 def left(speed):
     GPIO.output(DIR1, GPIO.LOW)   # Set motor 1 reverse
     GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 forward
+#    GPIO.output(DIR2, GPIO.LOW)   # Set motor 1 reverse
+#    GPIO.output(DIR3, GPIO.HIGH)
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
