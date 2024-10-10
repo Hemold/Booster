@@ -15,7 +15,7 @@ DIR4 = 21  # Sort, venstre hjul
 Sensor1_PIN = 37  # Vores sensor pin1
 Sensor2_PIN = 35  # Vores sensor pin2
 # GPIO setup
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(DIR1, GPIO.OUT)      #motor dir ourput
 GPIO.setup(DIR2, GPIO.OUT)
 GPIO.setup(DIR3, GPIO.OUT)
