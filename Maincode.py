@@ -36,7 +36,7 @@ pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
 
 # Function to move forward
-def forward(speed=60):
+def forward(speed=90):
     GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
     GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
     GPIO.output(DIR3, GPIO.LOW)   # Højre hjul
