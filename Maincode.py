@@ -72,40 +72,30 @@ def stop():
     GPIO.cleanup()
 
 # Main loop example
-Venstre = int (GPIO.input(Sensor1_PIN))
-print(Venstre)
-Højre = int (GPIO.input(Sensor2_PIN))
-print(Højre)
+
+linefollower1 = 31      #pin for ventre sensor
+linefollower2 = 29      #pin for højre sensor
+
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(linefollower1,GPIO.IN)
+GPIO.setup(linefollower2,GPIO.IN)
+
 try:
-    forward(100)  # Move forward at 50% speed
-    time.sleep(4)
+   while True:
+    Venstre = int (GPIO.input(linefollower1))
+    print(Venstre)
 
-    #left(75)  # Turn left at 50% speed
-    time.sleep(4)
-    backwards(100)
-    #right(75)  # Turn right at 50% speed
-    time.sleep(8)
-#try:
-#   while True:
-#        Venstre = int (GPIO.input(Sensor1_PIN))
-#        print(Venstre)
-#        Højre = int (GPIO.input(Sensor2_PIN))
-#        print(Højre)
-#        time.sleep(0.1)
-#except KeyboardInterrupt:
-#  pass
-#GPIO.cleanup()
+    Højre = int (GPIO.input(linefollower2))
+    print(Højre)
 
-    # Sensor loop
-#    while True:
-#        sensor_value = GPIO.input(Sensor1_PIN)  # Read the sensor value
-        
-#        if sensor_value == GPIO.HIGH:
-#            print("Reflective surface detected")  # Checks if a reflective surface is detected
-#        else:
-#            print("No reflective surface detected")
-            
-#        time.sleep(0.1)  # Short delay
+    time.sleep(0.1)
+
+except KeyboardInterrupt:
+  pass
+GPIO.cleanup()
 
 finally:
     stop()  # Ensure GPIO cleanup when done
