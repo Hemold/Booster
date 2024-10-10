@@ -13,8 +13,8 @@ DIR2 = 24 # Højre hjul
 DIR3 = 19 # Hvid, højre hjul
 DIR4 = 21  # Sort, venstre hjul
 
-Sensor1_PIN = 37  # Vores sensor pin1
-Sensor2_PIN = 35  # Vores sensor pin2
+Sensor1_PIN = 31  # Vores sensor pin1
+Sensor2_PIN = 29  # Vores sensor pin2
 # GPIO setup
 
 GPIO.setup(DIR1, GPIO.OUT)      #motor dir ourput
@@ -44,7 +44,7 @@ def forward():
 
 def backwards():
     GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
-    GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward
+    GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward.
     GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 direction forward
     GPIO.output(DIR4, GPIO.LOW)
     pwm1.ChangeDutyCycle(100)   # Set motor 1 speed (0-100)
@@ -73,8 +73,6 @@ def stop():
     GPIO.cleanup()
 
 # Main loop example
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
 
 try:
    while True:
