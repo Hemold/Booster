@@ -78,18 +78,16 @@ try:
     print(Venstre)
     Højre = int (GPIO.input(Sensor2_PIN))
     print(Højre)
+    if((Sensor1_PIN == 0) and (Sensor2_PIN == 1)):
+        left()
+    elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
+        right()
+    elif((Sensor2_PIN == 0) and (Sensor2_PIN == 0)):
+        forward()
+    elif((Sensor2_PIN == 1) and (Sensor2_PIN == 1)):
+        forward()
+    else:
+        forward()
 except KeyboardInterrupt:
   pass
 GPIO.cleanup()
-
-
-if((Sensor1_PIN == 0) and (Sensor2_PIN == 1)):
-    left()
-elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
-    right()
-elif((Sensor2_PIN == 0) and (Sensor2_PIN == 0)):
-    forward()
-elif((Sensor2_PIN == 1) and (Sensor2_PIN == 1)):
-    forward()
-else:
-    forward()
