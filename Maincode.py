@@ -95,3 +95,15 @@ except KeyboardInterrupt:
 finally:
     GPIO.cleanup()
     stop()  # Ensure GPIO cleanup when done
+
+
+if((linefollower1 == 0) and (linefollower2 == 1)):
+    left()
+elif((linefollower1 == 1) and (linefollower2 == 0)):
+    right()
+elif((linefollower1 == 0) and (linefollower2 == 0)):
+    forward()
+elif((linefollower1 == 1) and (linefollower2 == 1)):
+    forward()
+else:
+    forward()
