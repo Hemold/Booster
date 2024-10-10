@@ -85,19 +85,11 @@ GPIO.setup(linefollower2,GPIO.IN)
 
 try:
    while True:
-    #forward(75)
+    forward(75)
     Venstre = int (GPIO.input(linefollower1))
     print(Venstre)
     Højre = int (GPIO.input(linefollower2))
     print(Højre)
-    #if  Venstre == 1:
-    right(50)
-    left(20)
-    #if Højre == 1:
-        #left(50)
-        #right(20)
-    time.sleep(0.1)
-
 except KeyboardInterrupt:
   pass
 finally:
