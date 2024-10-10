@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
+GPIO.setmode(GPIO.BOARD)
 # Pin setup
 PWM1 = 11 # Blå, Venstre side
 PWM2 = 13 # Lilla, Højre side
@@ -15,7 +16,7 @@ DIR4 = 21  # Sort, venstre hjul
 Sensor1_PIN = 37  # Vores sensor pin1
 Sensor2_PIN = 35  # Vores sensor pin2
 # GPIO setup
-GPIO.setmode(GPIO.BOARD)
+
 GPIO.setup(DIR1, GPIO.OUT)      #motor dir ourput
 GPIO.setup(DIR2, GPIO.OUT)
 GPIO.setup(DIR3, GPIO.OUT)
@@ -82,9 +83,9 @@ try:
         left()
     elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
         right()
-    elif((Sensor2_PIN == 0) and (Sensor2_PIN == 0)):
+    elif((Sensor1_PIN == 0) and (Sensor2_PIN == 0)):
         forward()
-    elif((Sensor2_PIN == 1) and (Sensor2_PIN == 1)):
+    elif((Sensor1_PIN == 1) and (Sensor2_PIN == 1)):
         forward()
     else:
         forward()
