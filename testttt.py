@@ -15,6 +15,6 @@ while True:
     Højre = int (GPIO.input(Sensor2_PIN))
     print(Højre)
     time.sleep(0.1)
-    GPIO.cleanup()
+#    GPIO.cleanup()
 
 
