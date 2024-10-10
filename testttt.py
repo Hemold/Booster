@@ -1,7 +1,7 @@
 #sensor testdewdee21eqwe
 import RPi.GPIO as GPIO
 import time
-from time import sleep
+#from time import sleep
 
 
 SpeedPin = 11 #Højre
