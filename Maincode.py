@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 # Pin setup
 PWM1 = 11 # Blå, Venstre side
 PWM2 = 13 # Lilla, Højre side
