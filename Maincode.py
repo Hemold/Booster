@@ -53,15 +53,15 @@ def backwards():
 
 # Function to turn left
 def left():
-    GPIO.output(DIR1, GPIO.LOW)   # Set motor 1 reverse
-    GPIO.output(DIR2, GPIO.LOW)  # Set motor 2 forward
+    GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 reverse
+    GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 forward
     pwm1.ChangeDutyCycle(45)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(30)   # Set motor 2 speed (0-100)
 
 # Function to turn right
 def right():
-    GPIO.output(DIR3, GPIO.HIGH)  # Set motor 1 forward
-    GPIO.output(DIR4, GPIO.HIGH)   # Set motor 2 reverse
+    GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 forward
+    GPIO.output(DIR4, GPIO.LOW)   # Set motor 2 reverse
     pwm1.ChangeDutyCycle(30)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(45)   # Set motor 2 speed (0-100)
 
