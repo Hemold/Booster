@@ -12,17 +12,18 @@ DIR2 = 9 # Højre hjul
 DIR3 = 8 # Hvid, højre hjul
 DIR4 = 7  # Sort, venstre hjul
 
-#QRE1113_PIN = 17  # Example pin for the QRE1113 sensor
-
+Sensor1_PIN = 37  # Vores sensor pin1
+Sensor2_PIN = 35  # Vores sensor pin2
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(DIR1, GPIO.OUT)
+GPIO.setup(DIR1, GPIO.OUT)      #motor dir ourput
 GPIO.setup(DIR2, GPIO.OUT)
 GPIO.setup(DIR3, GPIO.OUT)
 GPIO.setup(DIR4, GPIO.OUT)
-GPIO.setup(PWM1, GPIO.OUT)
+GPIO.setup(PWM1, GPIO.OUT)      #PWM output
 GPIO.setup(PWM2, GPIO.OUT)
-#GPIO.setup(QRE1113_PIN, GPIO.IN)  # Setup QRE1113_PIN as an input
+GPIO.setup(Sensor1_PIN, GPIO.IN)  # Sensor input
+GPIO.setup(Sensor2_PIN, GPIO.IN)
 
 # PWM setup (setting frequency to 100 Hz)
 pwm1 = GPIO.PWM(PWM1, 100)
@@ -72,6 +73,11 @@ def stop():
 
 # Main loop example
 try:
+    Venstre = int (GPIO.input(Sensor1_PIN))
+    print(Venstre)
+    Højre = int (GPIO.input(Sensor2_PIN))
+    print(Højre)
+    time.sleep(0.1)
     forward(100)  # Move forward at 50% speed
     time.sleep(4)
 
@@ -80,10 +86,20 @@ try:
     backwards(100)
     #right(75)  # Turn right at 50% speed
     time.sleep(8)
+#try:
+#   while True:
+#        Venstre = int (GPIO.input(Sensor1_PIN))
+#        print(Venstre)
+#        Højre = int (GPIO.input(Sensor2_PIN))
+#        print(Højre)
+#        time.sleep(0.1)
+#except KeyboardInterrupt:
+#  pass
+#GPIO.cleanup()
 
     # Sensor loop
 #    while True:
-#        sensor_value = GPIO.input(QRE1113_PIN)  # Read the sensor value
+#        sensor_value = GPIO.input(Sensor1_PIN)  # Read the sensor value
         
 #        if sensor_value == GPIO.HIGH:
 #            print("Reflective surface detected")  # Checks if a reflective surface is detected
