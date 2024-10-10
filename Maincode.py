@@ -19,7 +19,7 @@ Sensor1_PIN = 31  # Vores sensor pin1 (Left)
 Sensor2_PIN = 29  # Vores sensor pin2 (Right)
 
 # GPIO setup
-GPIO.setup(DIR1, GPIO.OUT)  # Motor direction output
+GPIO.setup(DIR1, GPIO.OUT)  # Motor dir output
 GPIO.setup(DIR2, GPIO.OUT)
 GPIO.setup(DIR3, GPIO.OUT)
 GPIO.setup(DIR4, GPIO.OUT)
@@ -36,47 +36,49 @@ pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
 
 # Function to move forward
-def forward(speed=90):
+def forward(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
     GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
-    GPIO.output(DIR3, GPIO.LOW)   # Højre hjul
-    GPIO.output(DIR4, GPIO.LOW)   # Venstre hjul
+    GPIO.output(DIR3, GPIO.LOW)   # højre hjul
+    GPIO.output(DIR4, GPIO.LOW)   # venstre hjul
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
-# Function to turn left with variable speed
-def turn_left(venstre_intensity):
-    GPIO.output(DIR1, GPIO.HIGH)  # Motor 1 forward
-    GPIO.output(DIR2, GPIO.HIGH)  # Motor 2 forward
-    # Slow down left side, keep right side at normal speed
-    pwm1.ChangeDutyCycle(50 * venstre_intensity)  # Left motor slower
-    pwm2.ChangeDutyCycle(70)                      # Right motor faster
+# Function to turn left
+def left(speed):
+    GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 forward
+    GPIO.output(DIR2, GPIO.HIGH)   # Set motor 2 forward
+    pwm1.ChangeDutyCycle(speed)    # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0 (stop right motor)
 
-# Function to turn right with variable speed
-def turn_right(højre_intensity):
-    GPIO.output(DIR1, GPIO.HIGH)  # Motor 1 forward
-    GPIO.output(DIR2, GPIO.HIGH)  # Motor 2 forward
-    # Slow down right side, keep left side at normal speed
-    pwm1.ChangeDutyCycle(70)                      # Left motor faster
-    pwm2.ChangeDutyCycle(50 * højre_intensity)    # Right motor slower
+# Function to turn right
+def right(speed):
+    GPIO.output(DIR3, GPIO.LOW)    # Set motor 1 forward
+    GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 forward
+    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0 (stop left motor)
+    pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
 
-# Adjust speed and direction based on sensor readings
-def adjust_movement(venstre, højre):
-    # No line detected, drive forward
+# Proportional turn based on sensor input
+def smooth_turn(venstre, højre):
+    if venstre > højre:
+        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust left motor slower
+        pwm2.ChangeDutyCycle(70)                   # Right motor runs normally
+    elif højre > venstre:
+        pwm1.ChangeDutyCycle(70)                   # Left motor runs normally
+        pwm2.ChangeDutyCycle(100 - højre * 100)    # Adjust right motor slower
+
+# Adjust speed based on sensor readings
+def adjust_speed(venstre, højre):
     if venstre == 0 and højre == 0:
-        forward(60)  # Move forward at a moderate speed
-    
-    # Line detected on the left, turn right
-    elif venstre == 1 and højre == 0:
-        turn_right(0.8)  # Adjust intensity if needed (0-1)
-    
-    # Line detected on the right, turn left
-    elif venstre == 0 and højre == 1:
-        turn_left(0.8)   # Adjust intensity if needed (0-1)
-    
-    # Line detected on both sides, slow down and go forward
+        forward(90)  # Move forward at a moderate speed
     elif venstre == 1 and højre == 1:
-        forward(30)      # Move slower forward when on the line
+        forward(90)  # Move forward if both sensors detect line (e.g., centering)
+    elif venstre == 0 and højre == 1:
+        right(70)    # Turn right if right sensor detects line
+        time.sleep(0.1)
+    elif venstre == 1 and højre == 0:
+        left(70)     # Turn left if left sensor detects line
+        time.sleep(0.1)
 
 # Cleanup GPIO
 def stop():
@@ -90,9 +92,9 @@ try:
         Venstre = GPIO.input(Sensor1_PIN)  # Read left sensor state
         Højre = GPIO.input(Sensor2_PIN)    # Read right sensor state
 
-        # Adjust movement based on sensor readings
-        adjust_movement(Venstre, Højre)
+        # Adjust speed based on sensor readings
+        adjust_speed(Venstre, Højre)
 
-        time.sleep(0.05)  # Lowering delay for quicker response
+        time.sleep(0.05)  # Lowering delay for better responsiveness
 except KeyboardInterrupt:
     stop()
