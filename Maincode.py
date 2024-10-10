@@ -72,7 +72,7 @@ def adjust_speed(venstre, højre):
     if venstre == 0 and højre == 0:
         forward(85)  # Move forward at a moderate speed
     elif venstre == 1 and højre == 1:
-        forward()  # Slow down when both sensors are triggered
+        forward(85)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
         right(60)    # Turn right
     elif venstre == 1 and højre == 0:
