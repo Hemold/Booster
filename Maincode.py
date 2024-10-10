@@ -34,10 +34,10 @@ pwm2.start(0)
 
 # Function to move forward
 def forward(speed):
-    GPIO.output(DIR1, GPIO.LOW)  # Venstre hjul
-    GPIO.output(DIR2, GPIO.LOW)  # Højre hjul
-    GPIO.output(DIR3, GPIO.HIGH)  # højre hjul
-    GPIO.output(DIR4, GPIO.HIGH)  # venstre hjul
+    GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
+    GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
+    GPIO.output(DIR3, GPIO.LOW)  # højre hjul
+    GPIO.output(DIR4, GPIO.LOW)  # venstre hjul
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
