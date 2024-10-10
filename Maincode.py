@@ -34,10 +34,10 @@ pwm2.start(0)
 
 # Function to move forward
 def forward(speed):
-    GPIO.output(DIR1, GPIO.LOW)  # Set motor 1 direction forward
-    GPIO.output(DIR2, GPIO.LOW)  # Set motor 2 direction forward
-    GPIO.output(DIR3, GPIO.HIGH)  # Set motor 1 direction forward
-    GPIO.output(DIR4, GPIO.HIGH)
+    GPIO.output(DIR1, GPIO.LOW)  # Set motor 1 direction forward venstre F hjul?
+    #GPIO.output(DIR2, GPIO.LOW)  # Set motor 2 direction forward venstre B hjul?
+    #GPIO.output(DIR3, GPIO.HIGH)  # Set motor 1 direction forward højre F hjul?
+    #GPIO.output(DIR4, GPIO.HIGH)  # Set motor 1 direction forward højre F hjul?
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
@@ -85,12 +85,15 @@ GPIO.setup(linefollower2,GPIO.IN)
 
 try:
    while True:
+    forward(75)
     Venstre = int (GPIO.input(linefollower1))
     print(Venstre)
-
     Højre = int (GPIO.input(linefollower2))
     print(Højre)
-
+    if  Venstre == 1:
+        right(75)
+    if Højre == 1:
+        left(75)
     time.sleep(0.1)
 
 except KeyboardInterrupt:
@@ -98,4 +101,4 @@ except KeyboardInterrupt:
 GPIO.cleanup()
 
 finally:
-    stop()  # Ensure GPIO cleanup when done
+stop()  # Ensure GPIO cleanup when done
