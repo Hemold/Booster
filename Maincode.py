@@ -15,8 +15,8 @@ DIR2 = 24  # Højre hjul
 DIR3 = 19  # Hvid, højre hjul
 DIR4 = 21  # Sort, venstre hjul
 
-Sensor1_PIN = 31  # Vores sensor pin1 (Left)
-Sensor2_PIN = 29  # Vores sensor pin2 (Right)
+Sensor1_PIN = 31  # Vores sensor pin1
+Sensor2_PIN = 29  # Vores sensor pin2
 
 # GPIO setup
 GPIO.setup(DIR1, GPIO.OUT)  # Motor dir output
@@ -39,46 +39,46 @@ pwm2.start(0)
 def forward(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
     GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
-    GPIO.output(DIR3, GPIO.LOW)   # højre hjul
-    GPIO.output(DIR4, GPIO.LOW)   # venstre hjul
+    GPIO.output(DIR3, GPIO.LOW)  # højre hjul
+    GPIO.output(DIR4, GPIO.LOW)  # venstre hjul
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 # Function to turn left
 def left(speed):
-    GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 forward
+    GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 reverse
     GPIO.output(DIR2, GPIO.HIGH)   # Set motor 2 forward
     pwm1.ChangeDutyCycle(speed)    # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0 (stop right motor)
+    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0
 
 # Function to turn right
 def right(speed):
     GPIO.output(DIR3, GPIO.LOW)    # Set motor 1 forward
-    GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 forward
-    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0 (stop left motor)
+    GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 reverse
+    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0
     pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
 
 # Proportional turn based on sensor input
 def smooth_turn(venstre, højre):
     if venstre > højre:
-        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust left motor slower
-        pwm2.ChangeDutyCycle(70)                   # Right motor runs normally
+        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
+        pwm2.ChangeDutyCycle(50)
     elif højre > venstre:
-        pwm1.ChangeDutyCycle(70)                   # Left motor runs normally
-        pwm2.ChangeDutyCycle(100 - højre * 100)    # Adjust right motor slower
+        pwm1.ChangeDutyCycle(50)
+        pwm2.ChangeDutyCycle(100 - højre * 100)
 
 # Adjust speed based on sensor readings
 def adjust_speed(venstre, højre):
     if venstre == 0 and højre == 0:
-        forward(90)  # Move forward at a moderate speed
+        forward(85)  # Move forward at a moderate speed
     elif venstre == 1 and højre == 1:
-        forward(90)  # Move forward if both sensors detect line (e.g., centering)
+        forward(85)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
-        right(70)    # Turn right if right sensor detects line
-        time.sleep(0.1)
+        right(70)    # Turn right
+        time.sleep(0.25)
     elif venstre == 1 and højre == 0:
-        left(70)     # Turn left if left sensor detects line
-        time.sleep(0.1)
+        left(70)     # Turn left
+        time.sleep(0.25)
 
 # Cleanup GPIO
 def stop():
@@ -89,8 +89,8 @@ def stop():
 # Main loop example
 try:
     while True:
-        Venstre = GPIO.input(Sensor1_PIN)  # Read left sensor state
-        Højre = GPIO.input(Sensor2_PIN)    # Read right sensor state
+        Venstre = GPIO.input(Sensor1_PIN)  # Read sensor 1 state
+        Højre = GPIO.input(Sensor2_PIN)    # Read sensor 2 state
 
         # Adjust speed based on sensor readings
         adjust_speed(Venstre, Højre)
