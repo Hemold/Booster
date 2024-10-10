@@ -26,11 +26,11 @@ GPIO.setup(Sensor1_PIN, GPIO.IN)  # Sensor input
 GPIO.setup(Sensor2_PIN, GPIO.IN)
 
 # PWM setup (setting frequency to 100 Hz)
-pwm1 = GPIO.PWM(PWM1, 100)
-pwm2 = GPIO.PWM(PWM2, 100)
+PWM1 = GPIO.PWM(PWM1, 100)
+PWM2 = GPIO.PWM(PWM2, 100)
 
-pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
-pwm2.start(0)
+PWM1.start(0)  # Initialize with 0% duty cycle (stopped)
+PWM2.start(0)
 
 # Function to move forward
 def forward(speed):
@@ -38,16 +38,16 @@ def forward(speed):
     GPIO.output(DIR2, GPIO.LOW)  # Højre hjul
     GPIO.output(DIR3, GPIO.HIGH)  # højre hjul
     GPIO.output(DIR4, GPIO.HIGH)  # venstre hjul
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    PWM1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    PWM2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 def backwards(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
     GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward
     GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 direction forward
     GPIO.output(DIR4, GPIO.LOW)
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    PWM1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    PWM2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 # Function to turn left
 def left(speed):
@@ -55,20 +55,20 @@ def left(speed):
     GPIO.output(DIR2, GPIO.LOW)  # Set motor 2 forward
 #    GPIO.output(DIR2, GPIO.LOW)   # Set motor 1 reverse
 #    GPIO.output(DIR3, GPIO.HIGH)
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    PWM1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    PWM2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 # Function to turn right
 def right(speed):
     GPIO.output(DIR3, GPIO.HIGH)  # Set motor 1 forward
     GPIO.output(DIR4, GPIO.HIGH)   # Set motor 2 reverse
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    PWM1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    PWM2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 # Cleanup GPIO
 def stop():
-    pwm1.stop()
-    pwm2.stop()
+    PWM1.stop()
+    PWM2.stop()
     GPIO.cleanup()
 
 # Main loop example
