@@ -95,14 +95,21 @@ except KeyboardInterrupt:
   pass
 GPIO.cleanup()
 '''
-while True:
-    if((Sensor1_PIN == 0) and (Sensor2_PIN == 1)):
-        left()
-    elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
-        right()
-    elif((Sensor1_PIN == 0) and (Sensor2_PIN == 0)):
-        forward()
-    elif((Sensor1_PIN == 1) and (Sensor2_PIN == 1)):
-        forward()
-    else:
-        forward()
+try:
+    while True:
+        Venstre = GPIO.input(Sensor1_PIN)  # Read sensor 1 state
+        Højre = GPIO.input(Sensor2_PIN)    # Read sensor 2 state
+        
+        if Venstre == 0 and Højre == 1:
+            left()
+        elif Venstre == 1 and Højre == 0:
+            right()
+        elif Venstre == 0 and Højre == 0:
+            forward()
+        elif Venstre == 1 and Højre == 1:
+            forward()
+        else:
+            forward()
+        time.sleep(0.1)  # Delay to prevent excessive CPU usage
+except KeyboardInterrupt:
+    stop()
