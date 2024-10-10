@@ -72,10 +72,6 @@ def stop():
     GPIO.cleanup()
 
 # Main loop example
-
-GPIO.setup(Sensor1_PIN,GPIO.IN)
-GPIO.setup(Sensor2_PIN,GPIO.IN)
-
 try:
    while True:
     Venstre = int (GPIO.input(Sensor1_PIN))
