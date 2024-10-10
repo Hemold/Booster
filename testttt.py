@@ -2,8 +2,8 @@ import RPi.GPIO as GPIO
 import time
 
 
-Sensor1_PIN = 37  # Vores sensor pin1
-Sensor2_PIN = 35  # Vores sensor pin2
+Sensor1_PIN = 24  # Vores sensor pin1
+Sensor2_PIN = 25  # Vores sensor pin2
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(Sensor1_PIN, GPIO.IN)  # Sensor input
 GPIO.setup(Sensor2_PIN, GPIO.IN)
