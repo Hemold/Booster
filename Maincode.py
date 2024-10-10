@@ -91,18 +91,16 @@ try:
     print(Højre)
 except KeyboardInterrupt:
   pass
-finally:
-    GPIO.cleanup()
-    stop()  # Ensure GPIO cleanup when done
+GPIO.cleanup()
 
 
 if((linefollower1 == 0) and (linefollower2 == 1)):
-    left()
+    left(75)
 elif((linefollower1 == 1) and (linefollower2 == 0)):
-    right()
+    right(75)
 elif((linefollower1 == 0) and (linefollower2 == 0)):
-    forward()
+    forward(100)
 elif((linefollower1 == 1) and (linefollower2 == 1)):
-    forward()
+    forward(100)
 else:
-    forward()
+    forward(100)
