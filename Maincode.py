@@ -3,31 +3,32 @@ import time
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
+
 # Pin setup
-PWM1 = 11 # Blå, Venstre side
-PWM2 = 13 # Lilla, Højre side
+PWM1 = 11  # Blå, Venstre side
+PWM2 = 13  # Lilla, Højre side
 
 # Front
-DIR1 = 26 # Venstre hjul
-DIR2 = 24 # Højre hjul
+DIR1 = 26  # Venstre hjul
+DIR2 = 24  # Højre hjul
 # Bag
-DIR3 = 19 # Hvid, højre hjul
+DIR3 = 19  # Hvid, højre hjul
 DIR4 = 21  # Sort, venstre hjul
 
 Sensor1_PIN = 31  # Vores sensor pin1
 Sensor2_PIN = 29  # Vores sensor pin2
-# GPIO setup
 
-GPIO.setup(DIR1, GPIO.OUT)      #motor dir ourput
+# GPIO setup
+GPIO.setup(DIR1, GPIO.OUT)  # Motor dir output
 GPIO.setup(DIR2, GPIO.OUT)
 GPIO.setup(DIR3, GPIO.OUT)
 GPIO.setup(DIR4, GPIO.OUT)
-GPIO.setup(PWM1, GPIO.OUT)      #PWM output
+GPIO.setup(PWM1, GPIO.OUT)  # PWM output
 GPIO.setup(PWM2, GPIO.OUT)
 GPIO.setup(Sensor1_PIN, GPIO.IN)  # Sensor input
 GPIO.setup(Sensor2_PIN, GPIO.IN)
 
-# PWM setup (setting frequency to 100 Hz)
+# PWM setup (setting frequency to 1000 Hz)
 pwm1 = GPIO.PWM(PWM1, 1000)
 pwm2 = GPIO.PWM(PWM2, 1000)
 
@@ -35,35 +36,47 @@ pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
 
 # Function to move forward
-def forward():
+def forward(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
     GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
     GPIO.output(DIR3, GPIO.LOW)  # højre hjul
     GPIO.output(DIR4, GPIO.LOW)  # venstre hjul
-    pwm1.ChangeDutyCycle(50)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(50)   # Set motor 2 speed (0-100)
-
-def backwards():
-    GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
-    GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward.
-    GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 direction forward
-    GPIO.output(DIR4, GPIO.LOW)
-    pwm1.ChangeDutyCycle(100)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(100)   # Set motor 2 speed (0-100)
+    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 # Function to turn left
-def left():
+def left(speed):
     GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 reverse
-    GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 forward
-    pwm1.ChangeDutyCycle(50)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(0)   # Set motor 2 speed (0-100)
+    GPIO.output(DIR2, GPIO.HIGH)   # Set motor 2 forward
+    pwm1.ChangeDutyCycle(speed)    # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0
 
 # Function to turn right
-def right():
-    GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 forward
-    GPIO.output(DIR4, GPIO.LOW)   # Set motor 2 reverse
-    pwm1.ChangeDutyCycle(0)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(50)   # Set motor 2 speed (0-100)
+def right(speed):
+    GPIO.output(DIR3, GPIO.LOW)    # Set motor 1 forward
+    GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 reverse
+    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0
+    pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
+
+# Proportional turn based on sensor input
+def smooth_turn(venstre, højre):
+    if venstre > højre:
+        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
+        pwm2.ChangeDutyCycle(50)
+    elif højre > venstre:
+        pwm1.ChangeDutyCycle(50)
+        pwm2.ChangeDutyCycle(100 - højre * 100)
+
+# Adjust speed based on sensor readings
+def adjust_speed(venstre, højre):
+    if venstre == 0 and højre == 0:
+        forward(70)  # Move forward at a moderate speed
+    elif venstre == 1 and højre == 1:
+        forward(30)  # Slow down when both sensors are triggered
+    elif venstre == 0 and højre == 1:
+        right(50)    # Turn right
+    elif venstre == 1 and højre == 0:
+        left(50)     # Turn left
 
 # Cleanup GPIO
 def stop():
@@ -72,42 +85,14 @@ def stop():
     GPIO.cleanup()
 
 # Main loop example
-
-'''try:
-   while True:
-    Venstre = int (GPIO.input(Sensor1_PIN))
-    print(Venstre)
-    Højre = int (GPIO.input(Sensor2_PIN))
-    print(Højre)
-    if((Sensor1_PIN == 0) and (Sensor2_PIN == 1)):
-        left()
-    elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
-        right()
-    elif((Sensor1_PIN == 0) and (Sensor2_PIN == 0)):
-        forward()
-    elif((Sensor1_PIN == 1) and (Sensor2_PIN == 1)):
-        forward()
-    else:
-        forward()
-except KeyboardInterrupt:
-  pass
-GPIO.cleanup()
-'''
 try:
     while True:
         Venstre = GPIO.input(Sensor1_PIN)  # Read sensor 1 state
         Højre = GPIO.input(Sensor2_PIN)    # Read sensor 2 state
-        
-        if Venstre == 0 and Højre == 1:
-            right()
-        elif Venstre == 1 and Højre == 0:
-            left()
-        elif Venstre == 0 and Højre == 0:
-            forward()
-        elif Venstre == 1 and Højre == 1:
-            forward()
-        else:
-            forward()
-        time.sleep(0.1)  # Delay to prevent excessive CPU usage
+
+        # Adjust speed based on sensor readings
+        adjust_speed(Venstre, Højre)
+
+        time.sleep(0.05)  # Lowering delay for better responsiveness
 except KeyboardInterrupt:
     stop()
