@@ -85,7 +85,6 @@ GPIO.setup(linefollower2,GPIO.IN)
 
 try:
    while True:
-    forward(75)
     Venstre = int (GPIO.input(linefollower1))
     print(Venstre)
     Højre = int (GPIO.input(linefollower2))
