@@ -6,7 +6,7 @@ linefollower2 = 25
 
 
 GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(linefollower1,GPIO.IN)
 GPIO.setup(linefollower2,GPIO.IN)
