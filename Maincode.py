@@ -74,7 +74,7 @@ def stop():
 
 # Main loop example
 
-try:
+'''try:
    while True:
     Venstre = int (GPIO.input(Sensor1_PIN))
     print(Venstre)
@@ -93,3 +93,14 @@ try:
 except KeyboardInterrupt:
   pass
 GPIO.cleanup()
+'''
+if((Sensor1_PIN == 0) and (Sensor2_PIN == 1)):
+    left()
+elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
+    right()
+elif((Sensor1_PIN == 0) and (Sensor2_PIN == 0)):
+    forward()
+elif((Sensor1_PIN == 1) and (Sensor2_PIN == 1)):
+    forward()
+else:
+    forward()
