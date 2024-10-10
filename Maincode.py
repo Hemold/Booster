@@ -3,14 +3,14 @@ import time
 
 # Pin setup
 PWM1 = 17 # Blå, Venstre side
-PWM2 = 27 # Lilla, Højre side
+PWM2 = 15 # Lilla, Højre side
 
 # Front
-DIR1 = 10 # Venstre hjul
-DIR2 = 9 # Højre hjul
+DIR1 = 26 # Venstre hjul
+DIR2 = 24 # Højre hjul
 # Bag
-DIR3 = 8 # Hvid, højre hjul
-DIR4 = 7  # Sort, venstre hjul
+DIR3 = 19 # Hvid, højre hjul
+DIR4 = 21  # Sort, venstre hjul
 
 Sensor1_PIN = 37  # Vores sensor pin1
 Sensor2_PIN = 35  # Vores sensor pin2
