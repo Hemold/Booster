@@ -99,9 +99,9 @@ try:
         Højre = GPIO.input(Sensor2_PIN)    # Read sensor 2 state
         
         if Venstre == 0 and Højre == 1:
-            left()
-        elif Venstre == 1 and Højre == 0:
             right()
+        elif Venstre == 1 and Højre == 0:
+            left()
         elif Venstre == 0 and Højre == 0:
             forward()
         elif Venstre == 1 and Højre == 1:
