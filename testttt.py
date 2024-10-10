@@ -11,10 +11,12 @@ GPIO.setup(Sensor2_PIN, GPIO.IN)
 
 while True:
     Venstre = int (GPIO.input(Sensor1_PIN))
-    print(Venstre)
     Højre = int (GPIO.input(Sensor2_PIN))
+    print(Venstre) 
     print(Højre)
     time.sleep(0.1)
+    Venstre = 0
+    Højre = 0
 #    GPIO.cleanup()
 
 
