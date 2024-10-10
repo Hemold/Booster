@@ -33,37 +33,37 @@ pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
 
 # Function to move forward
-def forward(speed):
+def forward():
     GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
     GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
     GPIO.output(DIR3, GPIO.LOW)  # højre hjul
     GPIO.output(DIR4, GPIO.LOW)  # venstre hjul
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    pwm1.ChangeDutyCycle(100)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(100)   # Set motor 2 speed (0-100)
 
-def backwards(speed):
+def backwards():
     GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
     GPIO.output(DIR2, GPIO.HIGH)  # Set motor 2 direction forward
     GPIO.output(DIR3, GPIO.LOW)  # Set motor 1 direction forward
     GPIO.output(DIR4, GPIO.LOW)
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    pwm1.ChangeDutyCycle(100)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(100)   # Set motor 2 speed (0-100)
 
 # Function to turn left
-def left(speed):
+def left():
     GPIO.output(DIR1, GPIO.LOW)   # Set motor 1 reverse
     GPIO.output(DIR2, GPIO.LOW)  # Set motor 2 forward
 #    GPIO.output(DIR2, GPIO.LOW)   # Set motor 1 reverse
 #    GPIO.output(DIR3, GPIO.HIGH)
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    pwm1.ChangeDutyCycle(100)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(0)   # Set motor 2 speed (0-100)
 
 # Function to turn right
-def right(speed):
+def right():
     GPIO.output(DIR3, GPIO.HIGH)  # Set motor 1 forward
     GPIO.output(DIR4, GPIO.HIGH)   # Set motor 2 reverse
-    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    pwm1.ChangeDutyCycle(0)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(100)   # Set motor 2 speed (0-100)
 
 # Cleanup GPIO
 def stop():
@@ -95,12 +95,12 @@ GPIO.cleanup()
 
 
 if((linefollower1 == 0) and (linefollower2 == 1)):
-    left(75)
+    left()
 elif((linefollower1 == 1) and (linefollower2 == 0)):
-    right(75)
+    right()
 elif((linefollower1 == 0) and (linefollower2 == 0)):
-    forward(100)
+    forward()
 elif((linefollower1 == 1) and (linefollower2 == 1)):
-    forward(100)
+    forward()
 else:
-    forward(100)
+    forward()
