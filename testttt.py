@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
  
 # Define valid GPIO pins for line followers
-linefollower1 = 27  # GPIO27 (Physical Pin 13)
+linefollower1 = 4  # GPIO27 (Physical Pin 13)
 linefollower2 = 22  # GPIO22 (Physical Pin 15)
  
 # Suppress warnings
