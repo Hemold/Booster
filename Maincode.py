@@ -73,34 +73,27 @@ def stop():
 
 # Main loop example
 
-linefollower1 = 31      #pin for ventre sensor
-linefollower2 = 29      #pin for højre sensor
-
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-
-GPIO.setup(linefollower1,GPIO.IN)
-GPIO.setup(linefollower2,GPIO.IN)
+GPIO.setup(Sensor1_PIN,GPIO.IN)
+GPIO.setup(Sensor2_PIN,GPIO.IN)
 
 try:
    while True:
-    Venstre = int (GPIO.input(linefollower1))
+    Venstre = int (GPIO.input(Sensor1_PIN))
     print(Venstre)
-    Højre = int (GPIO.input(linefollower2))
+    Højre = int (GPIO.input(Sensor2_PIN))
     print(Højre)
 except KeyboardInterrupt:
   pass
 GPIO.cleanup()
 
 
-if((linefollower1 == 0) and (linefollower2 == 1)):
+if((Sensor1_PIN == 0) and (Sensor2_PIN == 1)):
     left()
-elif((linefollower1 == 1) and (linefollower2 == 0)):
+elif((Sensor1_PIN == 1) and (Sensor2_PIN == 0)):
     right()
-elif((linefollower1 == 0) and (linefollower2 == 0)):
+elif((Sensor2_PIN == 0) and (Sensor2_PIN == 0)):
     forward()
-elif((linefollower1 == 1) and (linefollower2 == 1)):
+elif((Sensor2_PIN == 1) and (Sensor2_PIN == 1)):
     forward()
 else:
     forward()
