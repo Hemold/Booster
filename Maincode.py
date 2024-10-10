@@ -72,12 +72,12 @@ def stop():
     GPIO.cleanup()
 
 # Main loop example
+Venstre = int (GPIO.input(Sensor1_PIN))
+print(Venstre)
+Højre = int (GPIO.input(Sensor2_PIN))
+print(Højre)
 try:
     forward(100)  # Move forward at 50% speed
-    Venstre = int (GPIO.input(Sensor1_PIN))
-    print(Venstre)
-    Højre = int (GPIO.input(Sensor2_PIN))
-    print(Højre)
     time.sleep(4)
 
     #left(75)  # Turn left at 50% speed
