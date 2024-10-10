@@ -39,7 +39,7 @@ def forward(speed):
     #GPIO.output(DIR3, GPIO.HIGH)  # højre hjul
     #GPIO.output(DIR4, GPIO.HIGH)  # venstre hjul
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    #pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
 def backwards(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Set motor 1 direction forward
