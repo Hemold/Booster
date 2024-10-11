@@ -56,14 +56,6 @@ def right(speed):
     GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 reverse
     pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
 
-# Proportional turn based on sensor input
-def smooth_turn(venstre, højre):
-    if venstre > højre:
-        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
-        pwm2.ChangeDutyCycle(50)
-    elif højre > venstre:
-        pwm1.ChangeDutyCycle(50)
-        pwm2.ChangeDutyCycle(100 - højre * 100)
 
 # Adjust speed based on sensor readings
 def adjust_speed(venstre, højre):
@@ -73,10 +65,10 @@ def adjust_speed(venstre, højre):
         forward(100)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
         right(90)    # Turn right
-        left(40)
+        left(35)
         time.sleep(0.15)
     elif venstre == 1 and højre == 0:
-        right(40)
+        right(35)
         left(90)     # Turn left
         time.sleep(0.15)
 
@@ -94,7 +86,5 @@ try:
 
         # Adjust speed based on sensor readings
         adjust_speed(Venstre, Højre)
-
-        time.sleep(0.05)  # Lowering delay for better responsiveness
 except KeyboardInterrupt:
     stop()
