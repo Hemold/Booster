@@ -52,7 +52,7 @@ def forward_with_proportional_turn(venstre, højre, base_speed=50):
         GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul (move forward)
         GPIO.output(DIR3, GPIO.LOW)   # højre hjul (move forward)
         GPIO.output(DIR4, GPIO.LOW)   # venstre hjul (move forward)
-        pwm1.ChangeDutyCycle(base_speed * 0.7)  # Slow down left motor
+        pwm1.ChangeDutyCycle(base_speed * 0.6)  # Slow down left motor
         pwm2.ChangeDutyCycle(base_speed)        # Keep right motor at base speed
     elif venstre == 0 and højre == 1:
         # Proportionally reduce right motor speed, increase left motor speed
@@ -61,7 +61,7 @@ def forward_with_proportional_turn(venstre, højre, base_speed=50):
         GPIO.output(DIR3, GPIO.LOW)   # højre hjul (move forward)
         GPIO.output(DIR4, GPIO.LOW)   # venstre hjul (move forward)
         pwm1.ChangeDutyCycle(base_speed)        # Keep left motor at base speed
-        pwm2.ChangeDutyCycle(base_speed * 0.7)  # Slow down right motor
+        pwm2.ChangeDutyCycle(base_speed * 0.6)  # Slow down right motor
     elif venstre == 1 and højre == 1:
         # If both sensors are off the line, keep moving forward at base speed
         GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul (move forward)
