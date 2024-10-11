@@ -1,121 +1,75 @@
-#sensor testdewdee21eqwe
 import RPi.GPIO as GPIO
-import time
-#from time import sleep
+from time import sleep
 
-
-SpeedPin = 11 #Højre
-SpeedPin1 = 13 #Venstre
-# PWM pins
-
-DirectionPin = 26
-DirectionPin1 = 24
-DirectionPin2 = 19
-DirectionPin3 = 21
-
-
-
-GPIO.setwarnings(False)			#disable warnings
-GPIO.setmode(GPIO.BOARD)	#set pin numbering system
-
-GPIO.cleanup()
-
-GPIO.setup(SpeedPin,GPIO.OUT)
-GPIO.setup(SpeedPin1,GPIO.OUT)
-
-GPIO.setup(DirectionPin,GPIO.OUT)
-GPIO.setup(DirectionPin1,GPIO.OUT)
-GPIO.setup(DirectionPin2,GPIO.OUT)
-GPIO.setup(DirectionPin3,GPIO.OUT)
-
-
-pi_pwm = GPIO.PWM(SpeedPin,1000)		#create PWM instance with frequency
-pi_pwm.start(0)
-
-pi_pwm1 = GPIO.PWM(SpeedPin1,1000)		#create PWM instance with frequency
-pi_pwm1.start(0)			
-
-def koer():
-    GPIO.output(DirectionPin, True)
-    GPIO.output(DirectionPin1, True)			
-
-    GPIO.output(DirectionPin2, True)
-    GPIO.output(DirectionPin3, True)
-    
-    pi_pwm.ChangeDutyCycle(100)
-    pi_pwm1.ChangeDutyCycle(100)
-
-    #start PWM of required Duty Cycle. 
-    # while True:
-    #     for duty in range(0,101,1):
-    #         pi_pwm.ChangeDutyCycle(duty) #provide duty cycle in the range 0-100
-    #         pi_pwm1.ChangeDutyCycle(duty)
-    #         sleep(0.1)
-                    
-    #     for duty in range(100,0,-1):
-    #         pi_pwm.ChangeDutyCycle(duty)
-    #         pi_pwm1.ChangeDutyCycle(duty)
-    #         sleep(0.1)
-
-
-def dven():
-		
-
-    GPIO.output(DirectionPin, True)
-    GPIO.output(DirectionPin1, True)			
-
-    GPIO.output(DirectionPin2, True)
-    GPIO.output(DirectionPin3, True)
-
-    pi_pwm.ChangeDutyCycle(100)
-    pi_pwm1.ChangeDutyCycle(0)
-
-
-def dhoej():
-
-    GPIO.output(DirectionPin, True)
-    GPIO.output(DirectionPin1, True)			
-
-    GPIO.output(DirectionPin2, True)
-    GPIO.output(DirectionPin3, True)
-
-    pi_pwm.ChangeDutyCycle(0)
-    pi_pwm1.ChangeDutyCycle(100)
-
-
-
-linefollower1 = 31
-linefollower2 = 29
-
-
-GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 
-GPIO.setup(linefollower1,GPIO.IN)
-GPIO.setup(linefollower2,GPIO.IN)
+# Pin setup
+PWM1 = 11  # Blå, Venstre side
+PWM2 = 13  # Lilla, Højre side
 
+# Front
+DIR1 = 26  # Venstre hjul
+DIR2 = 24  # Højre hjul
+# Bag
+DIR3 = 19  # Hvid, højre hjul
+DIR4 = 21  # Sort, venstre hjul
+
+Sensor1_PIN = 31  # Vores sensor pin1
+Sensor2_PIN = 29  # Vores sensor pin2
+
+# GPIO setup
+GPIO.setup(DIR1, GPIO.OUT)  # Motor dir output
+GPIO.setup(DIR2, GPIO.OUT)
+GPIO.setup(DIR3, GPIO.OUT)
+GPIO.setup(DIR4, GPIO.OUT)
+GPIO.setup(PWM1, GPIO.OUT)  # PWM output
+GPIO.setup(PWM2, GPIO.OUT)
+GPIO.setup(Sensor1_PIN, GPIO.IN)  # Sensor input
+GPIO.setup(Sensor2_PIN, GPIO.IN)
+
+# PWM setup (setting frequency to 1000 Hz)
+pwm1 = GPIO.PWM(PWM1, 1000)
+pwm2 = GPIO.PWM(PWM2, 1000)
+
+pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
+pwm2.start(0)
+
+# Function to move forward with proportional speed adjustments
+def forward_with_proportional_turn(venstre, højre, base_speed=55):
+    if venstre == 0 and højre == 0:
+        # Move straight forward when both sensors are on the line
+        pwm1.ChangeDutyCycle(base_speed)   # Set motor 1 speed (left wheel)
+        pwm2.ChangeDutyCycle(base_speed)   # Set motor 2 speed (right wheel)
+    elif venstre == 1 and højre == 0:
+        # Proportionally reduce left motor speed, increase right motor speed
+        pwm1.ChangeDutyCycle(base_speed * 0.7)   # Slow down left motor
+        pwm2.ChangeDutyCycle(base_speed)         # Keep right motor at base speed
+    elif venstre == 0 and højre == 1:
+        # Proportionally reduce right motor speed, increase left motor speed
+        pwm1.ChangeDutyCycle(base_speed)         # Keep left motor at base speed
+        pwm2.ChangeDutyCycle(base_speed * 0.7)   # Slow down right motor
+    else:
+        # If both sensors are off the line, keep moving forward at base speed
+        pwm1.ChangeDutyCycle(base_speed)
+        pwm2.ChangeDutyCycle(base_speed)
+
+# Cleanup GPIO
+def stop():
+    pwm1.stop()
+    pwm2.stop()
+    GPIO.cleanup()
+
+# Main loop example
 try:
-   while True:
-        Venstre = int (GPIO.input(linefollower1))
-        print(Venstre)
-        Højre = int (GPIO.input(linefollower2))
-        print(Højre)
-        time.sleep(0.1)
+    while True:
+        venstre = GPIO.input(Sensor1_PIN)  # Read left sensor
+        højre = GPIO.input(Sensor2_PIN)    # Read right sensor
+
+        # Adjust speed proportionally based on sensor readings
+        forward_with_proportional_turn(venstre, højre)
+
+        time.sleep(0.05)  # Short delay for responsiveness
 except KeyboardInterrupt:
-  pass
-GPIO.cleanup()
-
-
-if((linefollower1 == 0) and (linefollower2 == 1)):
-    dven()
-elif((linefollower1 == 1) and (linefollower2 == 0)):
-    dhoej()
-elif((linefollower1 == 0) and (linefollower2 == 0)):
-    koer()
-elif((linefollower1 == 1) and (linefollower2 == 1)):
-    koer()
-else:
-    koer()
-
-
+    stop()
 
