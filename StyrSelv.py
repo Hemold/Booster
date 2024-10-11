@@ -73,10 +73,10 @@ def press(key):
     if key=="s":
             bak(100)
     if key=="a":
+            right(100)
+            left(35)
+    if key=="d":
             right(35)
             left(100)
-    if key=="d":
-            right(70)
-            left(35)
 
 listen_keyboard(on_press = press)
