@@ -39,18 +39,44 @@ pwm2.start(0)
 def forward_with_proportional_turn(venstre, højre, base_speed=50):
     # Move straight forward when both sensors are on the line
     if venstre == 0 and højre == 0:
+        # Move straight forward when both sensors are on the line
+        GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
+        GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
+        GPIO.output(DIR3, GPIO.LOW)   # højre hjul
+        GPIO.output(DIR4, GPIO.LOW)   # venstre hjul
         pwm1.ChangeDutyCycle(base_speed)  # Set motor 1 speed (left wheel)
         pwm2.ChangeDutyCycle(base_speed)  # Set motor 2 speed (right wheel)
     elif venstre == 1 and højre == 0:
         # Proportionally reduce left motor speed, increase right motor speed
-        pwm1.ChangeDutyCycle(base_speed * 0.7)  # Slow down left motor
+        GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul (move forward)
+        GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul (move forward)
+        GPIO.output(DIR3, GPIO.LOW)   # højre hjul (move forward)
+        GPIO.output(DIR4, GPIO.LOW)   # venstre hjul (move forward)
+        pwm1.ChangeDutyCycle(base_speed * 0.8)  # Slow down left motor
         pwm2.ChangeDutyCycle(base_speed)        # Keep right motor at base speed
     elif venstre == 0 and højre == 1:
         # Proportionally reduce right motor speed, increase left motor speed
+        GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul (move forward)
+        GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul (move forward)
+        GPIO.output(DIR3, GPIO.LOW)   # højre hjul (move forward)
+        GPIO.output(DIR4, GPIO.LOW)   # venstre hjul (move forward)
         pwm1.ChangeDutyCycle(base_speed)        # Keep left motor at base speed
-        pwm2.ChangeDutyCycle(base_speed * 0.7)  # Slow down right motor
+        pwm2.ChangeDutyCycle(base_speed * 0.8)  # Slow down right motor
     elif venstre == 1 and højre == 1:
         # If both sensors are off the line, keep moving forward at base speed
+        GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul (move forward)
+        GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul (move forward)
+        GPIO.output(DIR3, GPIO.LOW)   # højre hjul (move forward)
+        GPIO.output(DIR4, GPIO.LOW)   # venstre hjul (move forward)
+        pwm1.ChangeDutyCycle(base_speed)
+        pwm2.ChangeDutyCycle(base_speed)
+    else:
+        GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul (move forward)
+        GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul (move forward)
+        GPIO.output(DIR3, GPIO.LOW)   # højre hjul (move forward)
+        GPIO.output(DIR4, GPIO.LOW)   # venstre hjul (move forward)
+        pwm1.ChangeDutyCycle(base_speed)
+        pwm2.ChangeDutyCycle(base_speed)
 
         pwm1.ChangeDutyCycle(base_speed)
         pwm2.ChangeDutyCycle(base_speed)
