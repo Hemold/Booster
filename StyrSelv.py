@@ -72,8 +72,8 @@ def press(key):
     if key=="s":
             bak(100)
     if key=="a":
-            left(80)
+            left(70)
     if key=="d":
-            right(80)
+            right(70)
 
 listen_keyboard(on_press = press)
