@@ -66,6 +66,16 @@ def bak(speed):
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
     pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
 
+def stop(speed):
+    GPIO.output(DIR1, GPIO.LOW)  # Venstre hjul
+    GPIO.output(DIR2, GPIO.LOW)  # Højre hjul
+    GPIO.output(DIR3, GPIO.HIGH)  # højre hjul
+    GPIO.output(DIR4, GPIO.HIGH)  # venstre hjul
+    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+    pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
+    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+
 
 def press(key):
     if key=="w":
@@ -78,5 +88,7 @@ def press(key):
     if key=="d":
             right(35)
             left(100)
-
+    if key=="x":
+            right(0)
+            left(0)
 listen_keyboard(on_press = press)
