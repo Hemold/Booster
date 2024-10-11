@@ -37,24 +37,25 @@ pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
 
 
-def Forward(speed):
+# Function to move forward
+def forward(speed):
     GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
     GPIO.output(DIR2, GPIO.HIGH)  # Højre hjul
     GPIO.output(DIR3, GPIO.LOW)  # højre hjul
     GPIO.output(DIR4, GPIO.LOW)  # venstre hjul
     pwm1.ChangeDutyCycle(speed)   # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(speed)
- 
+    pwm2.ChangeDutyCycle(speed)   # Set motor 2 speed (0-100)
+
+# Function to turn left
 def left(speed):
     GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 reverse
     GPIO.output(DIR2, GPIO.HIGH)   # Set motor 2 forward
     pwm1.ChangeDutyCycle(speed)    # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0
 
+# Function to turn right
 def right(speed):
     GPIO.output(DIR3, GPIO.LOW)    # Set motor 1 forward
     GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 reverse
-    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0
     pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
 
 def bak(speed):
@@ -68,12 +69,14 @@ def bak(speed):
 
 def press(key):
     if key=="w":
-            Forward(100)
+            forward(100)
     if key=="s":
             bak(100)
     if key=="a":
-            left(70)
+            right(35)
+            left(100)
     if key=="d":
             right(70)
+            left(35)
 
 listen_keyboard(on_press = press)
