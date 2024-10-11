@@ -49,8 +49,11 @@ def forward_with_proportional_turn(venstre, højre, base_speed=55):
         # Proportionally reduce right motor speed, increase left motor speed
         pwm1.ChangeDutyCycle(base_speed)         # Keep left motor at base speed
         pwm2.ChangeDutyCycle(base_speed * 0.7)   # Slow down right motor
-    else:
+    elif venstre == 1 and højre == 1:
         # If both sensors are off the line, keep moving forward at base speed
+        pwm1.ChangeDutyCycle(base_speed)
+        pwm2.ChangeDutyCycle(base_speed)
+    else:
         pwm1.ChangeDutyCycle(base_speed)
         pwm2.ChangeDutyCycle(base_speed)
 
