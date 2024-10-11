@@ -49,13 +49,13 @@ def left(speed):
     GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 reverse
     GPIO.output(DIR2, GPIO.HIGH)   # Set motor 2 forward
     pwm1.ChangeDutyCycle(speed)    # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(25)        # Set motor 2 speed to 0
+    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0
 
 # Function to turn right
 def right(speed):
     GPIO.output(DIR3, GPIO.LOW)    # Set motor 1 forward
     GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 reverse
-    pwm1.ChangeDutyCycle(25)        # Set motor 1 speed to 0
+    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0
     pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
 
 # Proportional turn based on sensor input
@@ -70,15 +70,15 @@ def smooth_turn(venstre, højre):
 # Adjust speed based on sensor readings
 def adjust_speed(venstre, højre):
     if venstre == 0 and højre == 0:
-        forward(50)  # Move forward at a moderate speed
+        forward(70)  # Move forward at a moderate speed
     elif venstre == 1 and højre == 1:
-        forward(50)  # Slow down when both sensors are triggered
+        forward(70)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
-        right(35)    # Turn right
-        time.sleep(0.15)
+        right(40)    # Turn right
+        time.sleep(0.2)
     elif venstre == 1 and højre == 0:
-        left(35)     # Turn left
-        time.sleep(0.15)
+        left(40)     # Turn left
+        time.sleep(0.2)
 
 # Cleanup GPIO
 def stop():
