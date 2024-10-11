@@ -80,11 +80,11 @@ def adjust_speed(venstre, højre):
     elif venstre == 0 and højre == 1:
         pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
         pwm2.ChangeDutyCycle(50)    # Turn right
-        time.sleep(0.2)
+        time.sleep(0.1)
     elif venstre == 1 and højre == 0:
         pwm1.ChangeDutyCycle(50)
         pwm2.ChangeDutyCycle(100 - højre * 100)     # Turn left
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 # Cleanup GPIO
 def stop():
