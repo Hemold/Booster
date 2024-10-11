@@ -36,7 +36,7 @@ pwm1.start(0)  # Initialize with 0% duty cycle (stopped)
 pwm2.start(0)
 
 # Function to move forward with proportional speed adjustments
-def forward_with_proportional_turn(venstre, højre, base_speed=70):
+def forward_with_proportional_turn(venstre, højre, base_speed=50):
     if venstre == 0 and højre == 0:
         # Move straight forward when both sensors are on the line
         GPIO.output(DIR1, GPIO.HIGH)  # Venstre hjul
