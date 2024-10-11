@@ -49,13 +49,13 @@ def left(speed):
     GPIO.output(DIR1, GPIO.HIGH)   # Set motor 1 reverse
     GPIO.output(DIR2, GPIO.HIGH)   # Set motor 2 forward
     pwm1.ChangeDutyCycle(speed)    # Set motor 1 speed (0-100)
-    pwm2.ChangeDutyCycle(10)        # Set motor 2 speed to 0
+    pwm2.ChangeDutyCycle(0)        # Set motor 2 speed to 0
 
 # Function to turn right
 def right(speed):
     GPIO.output(DIR3, GPIO.LOW)    # Set motor 1 forward
     GPIO.output(DIR4, GPIO.LOW)    # Set motor 2 reverse
-    pwm1.ChangeDutyCycle(10)        # Set motor 1 speed to 0
+    pwm1.ChangeDutyCycle(0)        # Set motor 1 speed to 0
     pwm2.ChangeDutyCycle(speed)    # Set motor 2 speed (0-100)
 
 # Proportional turn based on sensor input
