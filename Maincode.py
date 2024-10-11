@@ -74,11 +74,11 @@ def adjust_speed(venstre, højre):
     elif venstre == 0 and højre == 1:
         right(100)    # Turn right
         left(55)
-        time.sleep(0.1)
+        time.sleep(0.05)
     elif venstre == 1 and højre == 0:
         right(55)
         left(100)     # Turn left
-        time.sleep(0.1)
+        time.sleep(0.05)
 
 # Cleanup GPIO
 def stop():
