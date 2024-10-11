@@ -65,11 +65,11 @@ def right(speed):
 # Proportional turn based on sensor input
 def smooth_turn(venstre, højre):
     if venstre > højre:
-        pwm1.ChangeDutyCycle(70)
-        pwm2.ChangeDutyCycle(100 - højre * 100)
-    elif højre > venstre:
         pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
-        pwm2.ChangeDutyCycle(70)
+        pwm2.ChangeDutyCycle(50)
+    elif højre > venstre:
+        pwm1.ChangeDutyCycle(50)
+        pwm2.ChangeDutyCycle(100 - højre * 100)
 
 # Adjust speed based on sensor readings
 def adjust_speed(venstre, højre):
@@ -78,12 +78,12 @@ def adjust_speed(venstre, højre):
     elif venstre == 1 and højre == 1:
         forward(70)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
-        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
-        pwm2.ChangeDutyCycle(50)    # Turn right
-        time.sleep(0.2)
-    elif venstre == 1 and højre == 0:
         pwm1.ChangeDutyCycle(50)
         pwm2.ChangeDutyCycle(100 - højre * 100)     # Turn left
+        time.sleep(0.2)
+    elif venstre == 1 and højre == 0:
+        pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
+        pwm2.ChangeDutyCycle(50)    # Turn right
         time.sleep(0.2)
 
 # Cleanup GPIO
