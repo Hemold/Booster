@@ -68,16 +68,16 @@ def smooth_turn(venstre, højre):
 # Adjust speed based on sensor readings
 def adjust_speed(venstre, højre):
     if venstre == 0 and højre == 0:
-        forward(95)  # Move forward at a moderate speed
+        forward(100)  # Move forward at a moderate speed
     elif venstre == 1 and højre == 1:
-        forward(95)  # Slow down when both sensors are triggered
+        forward(100)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
-        right(95)    # Turn right
-        left(40)
+        right(100)    # Turn right
+        left(50)
         time.sleep(0.1)
     elif venstre == 1 and højre == 0:
-        right(40)
-        left(95)     # Turn left
+        right(50)
+        left(100)     # Turn left
         time.sleep(0.1)
 
 # Cleanup GPIO
