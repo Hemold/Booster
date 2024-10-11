@@ -64,12 +64,12 @@ def adjust_speed(venstre, højre):
     elif venstre == 1 and højre == 1:
         forward(100)  # Slow down when both sensors are triggered
     elif venstre == 0 and højre == 1:
-        right(90)    # Turn right
+        right(100)    # Turn right
         left(35)
         time.sleep(0.15)
     elif venstre == 1 and højre == 0:
         right(35)
-        left(90)     # Turn left
+        left(100)     # Turn left
         time.sleep(0.15)
 
 # Cleanup GPIO
