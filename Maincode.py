@@ -66,9 +66,9 @@ def right(speed):
 def smooth_turn(venstre, højre):
     if venstre > højre:
         pwm1.ChangeDutyCycle(100 - venstre * 100)  # Adjust speed proportionally
-        pwm2.ChangeDutyCycle(50)
+        pwm2.ChangeDutyCycle(70)
     elif højre > venstre:
-        pwm1.ChangeDutyCycle(50)
+        pwm1.ChangeDutyCycle(70)
         pwm2.ChangeDutyCycle(100 - højre * 100)
 
 # Adjust speed based on sensor readings
