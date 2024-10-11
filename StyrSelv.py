@@ -68,12 +68,12 @@ def bak(speed):
 
 def press(key):
     if key=="w":
-            Forward()
+            Forward(100)
     if key=="s":
-            bak()
+            bak(100)
     if key=="a":
-            left()
+            left(80)
     if key=="d":
-            right()
-while True:
-     listen_keyboard(on_press = press)
+            right(80)
+
+listen_keyboard(on_press = press)
