@@ -40,7 +40,7 @@ def right(speed):
     GPIO.output(DIR4, GPIO.LOW)
     pwm2.ChangeDutyCycle(speed)
 
-def bak(speed):
+def backward(speed):
     GPIO.output(DIR1, GPIO.LOW)
     GPIO.output(DIR2, GPIO.LOW)
     GPIO.output(DIR3, GPIO.HIGH)
@@ -55,20 +55,27 @@ def stop():
 # Flask server setup
 app = Flask(__name__)
 
-@app.route('/control', methods=['POST'])
-def control():
-    key = request.json.get('key')
-    if key == "w":
-        forward(100)
-    elif key == "s":
-        bak(100)
-    elif key == "a":
-        left(35)
-    elif key == "d":
-        right(35)
-    elif key == "x":
+@app.route('/move', methods=['GET'])
+def move():
+    command = request.args.get('command')
+
+    if command == 'forward':
+        forward()
+        return "Moving Forward"
+    elif command == 'backward':
+        backward()
+        return "Moving Backward"
+    elif command == 'left':
+        left()
+        return "Turning Left"
+    elif command == 'right':
+        right()
+        return "Turning Right"
+    elif command == 'stop':
         stop()
-    return "Command executed", 200
+        return "Stopping"
+    else:
+        return "Unknown command"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
